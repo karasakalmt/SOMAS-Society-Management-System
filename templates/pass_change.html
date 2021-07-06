@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Change Password{% endblock %}
+{% block content %}
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3" style="margin-top: 100px;">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color: var(--danger);">Change Password</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                <form style="margin-top: 20px;" class="form-group" method="POST">
+                                    {{ form.csrf_token }}
+                                    <br>
+                                    Your email: 
+                                    {{ session["user"] }}
+                                    <br>
+                                    {{ form.password.label }}
+                                    {{ form.password() }}
+                                    <br>
+                                    {{ form.submit(class="btn btn-primary") }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

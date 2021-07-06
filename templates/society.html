@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}{{ society_info.name }}{% endblock %}
+{% block content %}
+    <div style="margin-top: 20px;margin-bottom: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"><img style="width: 200px;height: 200px;" src="{{ url_for('static', filename=society_info.logo)  }}"></div>
+                <div class="col-md-8">
+                    <h3>{{ society_info.name }}</h3>
+                    <p>Contact: {{ society_info.email }}</p>
+                    {% if session["auth"] == "ADMIN" %}
+                    <p>Contact Advisor: {{ society_info["advisor-mail"] }}</p>
+                    {% endif %}
+                    <p>{{ society_info.description }}</p>
+                    {% if userFlag == 1 %}
+                    <form action="{{ url_for('show_society_details', society=society_info.slug) }}" method="POST"><button class="btn btn-primary" type="submit" style="color: var(--light);background: var(--success); border-color: #28A745;" name ="choise" value="member">Be a Member</button></form>
+                    {% elif userFlag == 2 %}
+                    <form action="{{ url_for('show_society_details', society=society_info.slug) }}" method="POST"><button class="btn btn-primary" type="submit" style="color: var(--light);background: var(--danger); border-color: var(--danger);" name="choise" value="end">End Membership</button></form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color: var(--danger);">Upcoming Events</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="color: var(--danger);">Past Events</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3" style="color: var(--danger);">Gallery</a></li>
+                            {% if authFlag %} 
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-4" style="color: var(--danger);">Details</a></li>
+                            {% endif %}
+                        </ul>
+                        <div class="tab-content active">
+                            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                <div style="display: flex;">
+                                    {% for event in upcomings %}
+                                    <a style="text-decoration: none;  color:#212529; margin:20px; display: block;" href="{{ url_for('show_event', society=event.soc_slug , event=event.event_slug ) }}">
+                                        <div style="width: 300px; margin: 10px;"><img src="{{ url_for('static', filename=event.poster) }}" style="width: 100%;height: 150px;">
+                                            <div class="card">
+                                                <div class="card-body" style="width: 100%;">
+                                                    <h4 class="card-title">{{ event.event_name }}</h4>
+                                                    <h6 class="text-muted card-subtitle mb-2" style="font-size: 12px;">{{ event.date }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="tab-2">
+                                <!--content of all events here-->
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="tab-3">
+                                <br>
+                                {% if socFlag %}
+                                <form action="{{ url_for('show_society_details', society=society_info.slug) }}" method="POST" enctype="multipart/form-data">
+                                    <label for="gallery">Add a photo to Gallery:</label>
+                                    <input class="form-control" id="photo" name="photo" type="file" accept="image/*" required>
+                                    <br>
+                                    <input style="background-color: #28A745; border-color:#28A745;" class="btn btn-primary" id="submit" name="submit" type="submit" value="Add Photo">
+                                </form>
+                                <hr>
+                                {% endif %}
+                                {% for photo in gallery %}
+                                <span style="max-width: 200px; height: 200px;">
+                                <img style="max-width: 200px; height: 200px;" src="{{ url_for('static', filename=photo) }}" class="img-thumbnail">
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% if authFlag %}
+                            <div class="tab-pane" role="tabpanel" id="tab-4">
+                                <br>
+                                <h4>Total Budget: {{ society_info.budget }}</h4>
+                                <br>
+                                <h4>Payment List</h4>
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Event Name</th>
+                                        <th scope="col">Payed to</th>
+                                        <th scope="col">Cost</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for cost in costs %}
+                                    <tr>
+                                        <td>{{ cost.event }}</td>
+                                        <td>{{ cost.bill_detail }}</td>
+                                        <td>{{ cost.cost }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                                <br>
+                                <h4>Member List</h4>
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Member Email</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for member in members %}
+                                    <tr>
+                                        <td>{{ member }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                                <br>
+                                <h4>General Attendance List</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th scope="col">Event Name</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Student No</th>
+                                            <th scope="col">Email</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for attendee in attendance %}
+                                        <tr>
+                                            <td>{{ attendee.e_name }}</td>
+                                            <td>{{ attendee.name }}</td>
+                                            <td>{{ attendee.no }}</td>
+                                            <td>{{ attendee.email }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

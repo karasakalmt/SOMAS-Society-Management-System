@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+{% if error == 1 %}
+<div class="alert alert-success" role="alert" style="border-style: none;border-color: var(--danger);background: rgb(235,130,130);"><span style="color: rgb(105,72,76);"><strong>The email exists already. Try Again.&nbsp;</strong><br></span></div>
+{%endif%}   
+
+<div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3" style="margin-top: 100px;">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color: var(--danger);">Register</a></li>
+                        </ul>
+                            <div class="tab-pane" role="tabpanel" id="tab-1">
+                                <form style="margin-top: 20px;" class="form-group" method="POST">
+                                    {{ register_form.csrf_token }}
+                                    {{ register_form.name.label }}
+                                    {{ register_form.name(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.email.label }}
+                                    {{ register_form.email(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.password.label }}
+                                    {{ register_form.password(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.department.label }}
+                                    {{ register_form.department(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.year.label }}
+                                    {{ register_form.year(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.stuID.label }}
+                                    {{ register_form.stuID(class= "form-control") }}
+                                    <br>
+                                    {{ register_form.submit(class="btn btn-primary") }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

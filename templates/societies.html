@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div style="margin: 20px 0px;">
+    {% for society in societies %}
+    <div style="margin-top: 20px;margin-bottom: 20px;">
+        <a style="text-decoration: none;  color:#212529;" href="{{ url_for('show_society_details', society=society.slug) }}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"><img style="width: 100px;height: 100px;" src="{{ url_for('static', filename=society.logo) }}"></div>
+                    <div class="col-md-8">
+                        <h3>{{ society.name }}</h3>
+                        <p>{{ society.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+{% endblock %}

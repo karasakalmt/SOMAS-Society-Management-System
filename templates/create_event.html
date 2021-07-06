@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Create Event{% endblock %}
+{% block content %}
+{% if error == 1 %}
+<div class="alert alert-success" role="alert" style="border-style: none;border-color: var(--danger);background: rgb(235,130,130);"><span style="color: rgb(105,72,76);"><strong>The event had been already added. Try again.&nbsp;</strong><br></span></div>
+{%endif%}   
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3" style="margin-top: 100px;">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color: var(--danger);">Create Event</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                <form style="margin-top: 20px;" class="form-group" method="POST" enctype="multipart/form-data">
+                                    {{ form.csrf_token }}
+                                    <br>
+                                    {{ form.event_name.label }}
+                                    {{ form.event_name(class= "form-control") }}
+                                    <br>
+                                    {{ form.description.label }}
+                                    {{ form.description(class= "form-control") }}
+                                    <br>
+                                    {{ form.event_date.label }}
+                                    {{ form.event_date(class= "form-control") }}
+                                    <br>
+                                    {{ form.poster.label }}
+                                    {{ form.poster(class= "form-control") }}
+                                    <br>
+                                    {{ form.guest_name.label }}
+                                    {{ form.guest_name(class= "form-control") }}
+                                    <br>
+                                    {{ form.submit(class="btn btn-primary") }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

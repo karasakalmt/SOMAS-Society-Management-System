@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Events{% endblock %}
+{% block content %}
+{% if events != [] %}
+{% for event in events %}
+    <div style="background: rgb(242,242,242);border-style: none;border-radius: 1%;margin: 20px;padding: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="border-style: none;border-color: rgba(33,37,41,0);"><img src="{{ url_for('static', filename=event.poster) }}" style="width: 100%;border-style: none;border-color: var(--danger);height: 300px;"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5 style="margin-top: 10px;"><a href="{{ url_for('show_society_details', society=event.soc_slug) }}" style="text-decoration: none; color:#212529;">{{ event.soc_name }}</a></h5>
+                    <hr>
+                    <a style="text-decoration: none;  color:#212529;" href="{{ url_for('show_event', society=event.soc_slug, event=event.event_slug) }}">
+                    <h2>{{ event.event_name }}</h2>
+                    <p style="font-size: 12px;">{{ event.date }}</p>
+                    <p>Guests: {% for guest in event.guests %} <span style="background-color: rgb(255, 198, 198);">{{ guest }}</span> {% endfor %}</p>
+                    <p>{{ event.description }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ event.event_name }} | {{ event.soc_name }}{% endblock %}
+{% block content %}
+    <!--<div class="alert alert-success" role="alert"><span><strong>You have registered to this event!</strong><br></span></div>
+    <div class="alert alert-success" role="alert" style="border-style: none;border-color: var(--danger);background: rgb(235,130,130);"><span style="color: rgb(105,72,76);"><strong>You can't attend this event it is restricted.&nbsp;</strong><br></span></div>-->    
+    <div style="background: rgb(242,242,242);border-style: none;border-radius: 1%;margin: 20px;padding: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="border-style: none;border-color: rgba(33,37,41,0);"><img src="{{ url_for('static', filename=event.poster) }}" style="width: 100%;border-style: none;border-color: var(--danger);height: 300px;"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5 style="margin-top: 10px;"><a href="{{ url_for('show_society_details', society=event.soc_slug) }}" style="text-decoration: none; color:#212529;">{{ event.soc_name }}</a></h5>
+                    <hr>
+                    <h2>{{ event.event_name }}</h2>
+                    <p style="font-size: 12px;">{{ event.date }}</p>
+                    <p>Guests: {% for guest in event.guests %} <span style="background-color: rgb(255, 198, 198);">{{ guest }}</span> {% endfor %}</p>
+                    <p>{{ event.description }}</p>
+                    <form action="{{ url_for('show_event', society=event.soc_slug , event=event.event_slug ) }}" method="POST">
+                    {% if userFlag == 1 %}<button type="submit" style="background: rgb(24, 173, 24);border-style: solid;border-color: rgb(255,255,255);" class="btn btn-primary" name="submit">Attend</button>{% endif %}
+                    {% if userFlag == 2 %}<button type="submit" style="background: #DC3545;border-style: solid;border-color: rgb(255,255,255);" class="btn btn-primary" name="submit">Clear Attend</button>{% endif %}
+                    </form>
+                    {% if socFlag == 1 %}
+                    <hr style="margin-top: 20px;">
+                    <h4>Add Payment</h4>
+                    <form action="{{ url_for('show_event', society=event.soc_slug , event=event.event_slug ) }}" method="POST">
+                        <label for="paid"> Paid to: </label>
+                        <input class="form-control" type="text" placeholder="Paid to" name="paid" required>
+                        <br>
+                        <label for="payed"> Cost: </label>
+                        <input class="form-control" type="number" placeholder="Cost in TL" name="cost" required>
+                        <br>
+                        <button type="submit" style="background: rgb(24, 173, 24);border-style: solid;border-color: rgb(255,255,255);" class="btn btn-primary" name="submit">Add Payment</button>
+                    </form>
+                    {% endif %}
+
+                    {% if details != [] %}
+                    <hr>
+                    <h4>Payment List</h4>
+                        <table class="table">
+                            <tr>
+                                <th scope="col">Payed to</th>
+                                <th scope="col">Cost</th>
+                                {% if socFlag == True %}<th scope="col">Delete payment</th>{% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for detail in details %}
+                            <tr>
+                                <td>{{ detail.bill_detail }}</td>
+                                <td>{{ detail.cost }}</td>
+                                {% if socFlag == True %} 
+                                <td>
+                                    <form action="{{ url_for('show_event', society=event.soc_slug , event=event.event_slug ) }}" method="POST">
+                                    <button type="submit" style="background: #DC3545;border-style: solid;border-color: rgb(255,255,255);" class="btn btn-primary" name="delete" value="{{ detail.bill_detail }}">Delete Payment</button> 
+                                    </form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                    {% if attendees !=[] %}
+                    <hr>
+                    <h4>Attendance List</h4>
+                        <table class="table">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Student No</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for attendee in attendees %}
+                            <tr>
+                                <td>{{ attendee.name }}</td>
+                                <td>{{ attendee.no }}</td>
+                                <td>{{ attendee.email }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
