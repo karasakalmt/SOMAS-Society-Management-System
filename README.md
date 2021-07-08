@@ -43,7 +43,7 @@ From events apply page:
 - Apply or Reject event applications which are applied after societies' advisor.
 - Everything that a normal user can do.
 ## 🚀 How to run SOMAS?
-Firstly you better create a virtual environment, then you have to install requierements by ```pip -r /etc/requirements.txt``` after that you have to create a database and put credentials inside dboperate.py file.
+Firstly you have to clone the repo ```git clone git@github.com:patern0ster/SOMAS-Society-Management-System.git```, after you better create a virtual environment via ```virtualenv env``` then activate it with ```source ./env/bin/activate```, after that you have to install requierements by ```pip -r /etc/requirements.txt``` after that you have to create a database and put credentials inside dboperate.py file.
 ```python
 somasdb = mysql.connector.connect(
     host='',

@@ -3,16 +3,31 @@ import hashlib
 import os
 import fnmatch
 from helper import litowin
+import json
+
+with open('dbconfig.json') as f:
+    data = json.loads(f.read())
 
 somasdb = mysql.connector.connect(
-    host='',
-    user='',
-    passwd='',
-    auth_plugin='',
-    database=''
+    host=data['host'],
+    user=data['user'],
+    passwd=data['password'],
+    auth_plugin='mysql_native_password',
+    database=data['db']
 )
-
 db_cursor = somasdb.cursor()
+
+def configDB():
+    db_cursor('SHOW TABLES;')
+    tables = db_cursor.fetchall()
+    all_tables=[]
+    for table in tables:
+        all_tables+=table[0]
+    # keep on from here
+    with open('/etc/somasdb.sql', 'r') as f:
+            with db_cursor() as cursor:
+                cursor.execute(f.read(), multi=True)
+            somasdb.commit()
 
 def isExistsDB(id, attribute, table):
     db_cursor.execute(f'''SELECT {attribute} FROM {table} WHERE {table}.{attribute} = '{id}';''')
