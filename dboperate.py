@@ -15,19 +15,8 @@ somasdb = mysql.connector.connect(
     auth_plugin='mysql_native_password',
     database=data['db']
 )
-db_cursor = somasdb.cursor()
 
-def configDB():
-    db_cursor('SHOW TABLES;')
-    tables = db_cursor.fetchall()
-    all_tables=[]
-    for table in tables:
-        all_tables+=table[0]
-    # keep on from here
-    with open('/etc/somasdb.sql', 'r') as f:
-            with db_cursor() as cursor:
-                cursor.execute(f.read(), multi=True)
-            somasdb.commit()
+db_cursor = somasdb.cursor()
 
 def isExistsDB(id, attribute, table):
     db_cursor.execute(f'''SELECT {attribute} FROM {table} WHERE {table}.{attribute} = '{id}';''')

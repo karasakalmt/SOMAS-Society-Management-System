@@ -1,7 +1,7 @@
 from werkzeug.utils import redirect, secure_filename
 from forms import *
 from flask import Flask, request, render_template, session, url_for, abort
-from dboperate import configDB, db_cursor, getSocAdmAdv, isExistsComposite, isExistsDB, parseEvents, societyAuth, somasdb, passwordCheck, getSocietyInfo, getEvents, getImage, attendeeParse
+from dboperate import db_cursor, getSocAdmAdv, isExistsComposite, isExistsDB, parseEvents, societyAuth, somasdb, passwordCheck, getSocietyInfo, getEvents, getImage, attendeeParse
 from authorizations import accessLevel
 from datetime import timedelta
 from helper import *
@@ -24,20 +24,6 @@ def home():
         return redirect(url_for('login',next=request.url))
     event_list = getEvents(session["user"], 2, app.root_path)
     return render_template("events.html", events=event_list)
-
-@app.route("/db", methods = ['GET', 'POST'])
-def database():
-    form = DatabaseConfigForm
-    if request.method == 'POST':
-        # get details from form
-        host = form.host.data
-        user = form.user.data
-        passwd = form.password.data
-        db = form.database.data
-        dbJSON_create(host, user, passwd, db)
-        configDB(host, user, passwd, db)
-        return redirect(url_for('login', next=request.url), code=302)
-    return render_template("dbconfig.html", form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():

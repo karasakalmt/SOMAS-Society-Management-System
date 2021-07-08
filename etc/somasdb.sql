@@ -97,8 +97,7 @@ CREATE TABLE Attendee(
 	user_email VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_email) REFERENCES User(email),
     FOREIGN KEY (soc_email,e_name) REFERENCES Event(soc_email,event_name),
-    PRIMARY KEY (user_email,e_name,user_email)
+    PRIMARY KEY (user_email,e_name,soc_email)
 );
 
-INSERT INTO Administrator VALUES ("admin@metu.edu.tr","Admin",MD5("password"));
 SET FOREIGN_KEY_CHECKS=1;

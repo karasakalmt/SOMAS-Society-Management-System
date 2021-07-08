@@ -7,20 +7,6 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from flask_wtf.file import FileAllowed
 import datetime
-
-def email_check(form, field):
-    data = field.data
-    data = data.split('@')
-    if (data[1] != '@metu.edu.tr'):
-        raise ValidationError('Your mail must be ended with @metu.edu.tr')
-    raise ValidationError('Your date is incorrect form.')
-
-class DatabaseConfigForm(FlaskForm):
-    host = StringField("Host: ", validators=[DataRequired()])
-    user = StringField("User: ", validators=[DataRequired()])
-    password = PasswordField("Password: ", validators=[DataRequired()])
-    db = StringField("Database: ", validators=[DataRequired()])
-    submit = SubmitField("Register")
     
 class UserRegisterForm(FlaskForm):
     name = StringField("Name & Surname: ", validators=[DataRequired()])

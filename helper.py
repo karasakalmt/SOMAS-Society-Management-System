@@ -29,12 +29,3 @@ def litowin(result):
             refactored_result += i+'/'
     return refactored_result[:-1]
 
-def dbJSON_create(host, user, password, db):
-    jsonData = {
-        "host": host,
-        "user": user,
-        "password": password,
-        "db": db
-    }
-    with open('dbconfig.json', 'w') as outfile:
-        json.dump(jsonData, outfile, indent=4)
