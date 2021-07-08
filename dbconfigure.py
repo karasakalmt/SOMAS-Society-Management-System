@@ -1,7 +1,7 @@
 import mysql.connector
 import json
 
-def dbJSON_create(host, user, password, db):
+def dbJSON_create(host, user, password, db):# This configures the database spesification to be used in app
     jsonData = {
         "host": host,
         "user": user,
@@ -28,7 +28,6 @@ def configDB():
     all_tables=[]
     for table in tables:
         all_tables+=table
-    print(all_tables)
     if(all_tables==['Administrator', 'Advised', 'Advisor', 'Attendee', 'Event', 'Event_Guest', 'Payment', 'Society', 'SocietyMembers', 'Student', 'User']):
         return False
     with open('etc/somasdb.sql', 'r') as f:
@@ -63,5 +62,7 @@ if __name__ == '__main__':
         admin_email = input("Admin Email: ")
         admin_pass = input("Admin Password: ")
         db_cursor.execute(f'''INSERT INTO Administrator VALUES ('{admin_email}',"{admin_name}",MD5("{admin_pass}"));''')
+        somasdb.commit()
     else:
-        pass
+        print("Admin account not created.")
+    print("Database creation is done.")

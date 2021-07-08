@@ -43,17 +43,45 @@ From events apply page:
 - Apply or Reject event applications which are applied after societies' advisor.
 - Everything that a normal user can do.
 ## 🚀 How to run SOMAS?
-Firstly you have to clone the repo ```git clone git@github.com:patern0ster/SOMAS-Society-Management-System.git```, after you better create a virtual environment via ```virtualenv env``` then activate it with ```source ./env/bin/activate```, after that you have to install requierements by ```pip -r /etc/requirements.txt``` after that you have to create a database and put credentials inside dboperate.py file.
-```python
-somasdb = mysql.connector.connect(
-    host='',
-    user='',
-    passwd='',
-    auth_plugin='',
-    database=''
-)
+Firstly you have to clone the repo 
+```shell
+$ git clone git@github.com:patern0ster/SOMAS-Society-Management-System.git
 ```
-Run the somasdb.sql file inside your db. Then you have to type ```python3 app.py``` in your terminal. You are all done.  
+After you better create a virtual environment and activate it
+```shell
+$ virtualenv env
+$ source ./env/bin/activate
+```
+After that you have to install requierements by 
+```shell
+$ pip -r /etc/requirements.txt
+``` 
+You have to setup MySQL and create a database.
+```mysql
+CREATE DATABASE somas;
+```
+Just simply run the dbconfigure.py
+```shell
+$ python3 dbconfigure.py
+```
+Then enter the details into the application and your database will be set. Make sure you have a clean database. You will see a screen like this;
+```
+Host: localhost
+User: root
+Password: root
+Database: somas
+Database configured successfully
+Create an admin account [y/n]: y
+Admin name: patern0ster
+Admin Email: admin@gmail.com
+Admin Password: password
+Database creation is done.
+```
+
+You are all done. As last step just run the app
+```
+$ python3 app.py
+```
 ## :computer: Demo
 Demo link will be coming soon...
 ## ⭐️ Conclusion
